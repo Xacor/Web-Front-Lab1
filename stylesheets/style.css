@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+    font-family: 'Noto Serif', serif;
+}
+
+#page-header {
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 10px 0;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+#page-header > nav > ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+#page-header > nav > ul > li {
+    margin: 0 15px 0 0;
+    padding: 0;
+    display: inline;
+}
+#page-header > nav > ul > li > a {
+    text-decoration: none;
+    color: white;
+}
+#info {
+    width: 80%;;
+    font-size: larger;
+    margin: 0 auto;
+}
+#info p {
+    text-align: left;
+}
+
+#info aside {
+    float: inline-end;
+    max-width: 25%;
+    margin: 0 0 3% 3%
+}
+#kira-figure {
+    margin: auto;
+}
+#kira-figure img {
+    width: 100%;
+}
+
+#kira-figure figcaption {
+    text-align: right;
+}
+#ost {
+    width: 100%;
+}
+
+#page-footer {
+    clear: both;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    width: auto;
+    height: auto;
+    background-color: black;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+#page-footer p{
+    margin: 0 0 ;
+}
+#page-footer a {
+    text-decoration: none;
+    color: white;
+}
