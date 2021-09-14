@@ -55,12 +55,9 @@ body {
 #page-footer {
     clear: both;
     position: relative;
-    left: 0;
-    bottom: 0;
-    margin: auto;
-    width: auto;
-    height: auto;
+    width: 100%;
     background-color: black;
+    margin-top: 100px;
     color: white;
     text-align: center;
     text-decoration: none;
