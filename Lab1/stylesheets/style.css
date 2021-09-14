@@ -33,7 +33,7 @@ body {
     margin: 0 auto;
 }
 #info p {
-    text-align: left;
+    text-align: justify;
 }
 
 #info aside {
