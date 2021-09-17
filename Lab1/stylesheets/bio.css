@@ -46,18 +46,19 @@ body {
 
 #info aside {
     float: right;
-    max-width: 25%;
-    margin: 0 0 3% 3%
+    max-width: 20%;
+    margin: 0 0 1% 2%
 }
-#kira-figure {
+#light-figure {
+    text-align: right;
     margin: auto;
 }
-#kira-figure img {
-    width: 100%;
+#light-figure img {
+    height: 400px;
 }
 
-#kira-figure figcaption {
-    text-align: right;
+#light-figure figcaption {
+    text-align: center;
 }
 
 #page-footer {
