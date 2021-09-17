@@ -35,6 +35,9 @@ body {
 #info p {
     text-align: justify;
 }
+#info a {
+    color: black;
+}
 
 #info aside {
     float: right;
@@ -54,16 +57,13 @@ body {
 
 #page-footer {
     clear: both;
-    position: relative;
+    position: fixed;
+    bottom: 0;
     width: 100%;
     background-color: black;
-    margin-top: 10%;
     color: white;
     text-align: center;
     text-decoration: none;
-}
-#page-footer p{
-    margin: 0 0 ;
 }
 #page-footer a {
     text-decoration: none;
