@@ -49,6 +49,24 @@ body {
     max-width: 25%;
     margin: 0 0 3% 3%
 }
+
+#bio-info {
+    width: 80%;;
+    font-size: larger;
+    margin: 0 auto;
+}
+#bio-info p {
+    text-align: justify;
+}
+#bio-info a {
+    color: black;
+}
+
+#bio-info aside {
+    float: right;
+    max-width: 20%;
+    margin: 0 0 1% 2%
+}
 #kira-figure {
     margin: auto;
 }
@@ -59,6 +77,19 @@ body {
 #kira-figure figcaption {
     text-align: right;
 }
+
+#light-figure {
+    text-align: right;
+    margin: auto;
+}
+#light-figure img {
+    height: 400px;
+}
+
+#light-figure figcaption {
+    text-align: center;
+}
+
 
 #page-footer {
     clear: both;
