@@ -1,9 +1,15 @@
-body {
+#body {
     background: no-repeat url("images/bg_bggenerator_com.png");
     background-size: cover;
     margin: 0;
     font-size: 20px;
 }
+
+body {
+    margin: 0;
+    font-size: 20px;
+}
+
 
 #page-header {
     width: 100%;
