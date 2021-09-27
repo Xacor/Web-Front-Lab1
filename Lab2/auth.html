@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header id="page-header">
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html">Обратная связь</a>
+                </li>
+
+                <li>
+                    <a href="auth.html">Войти</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="form-container">
+        <form method="POST" action="https://httpbin.org/post" enctype="multipart/form-data" id="auth">
+            
+                <div class="auth-group">
+                    <label for="#login">
+                        <p>Login</p>
+                    </label>
+                    <input type="text" id="login" name="login" placeholder="username" required>
+                </div>
+
+                <div class="auth-group">
+                    <label for="#password">
+                        <p>Password</p>
+                    </label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+
+
+                <div class="auth-group">
+                    <input type="checkbox" name="remember" id="remember" value="yes">
+                    <label for="#checkbox">Remember me</label>
+                </div>
+
+                <input type="submit" value="Sign In" id="signin-btn">
+            
+        </form>
+    </div>
+    </main>
+    <footer id="page-footer">
+        <p>&copy;2021 Рябов К. Д.</p>
+        <p><a href="mailto:k.d.riabov@stud.mospolytech.ru">k.d.riabov@stud.mospolytech.ru</a></p>
+    </footer>
+</body>
+
+</html>

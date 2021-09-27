@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
@@ -10,53 +10,82 @@
 </head>
 
 <body>
+    <header id="page-header">
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html">Обратная связь</a>
+                </li>
+
+                <li>
+                    <a href="auth.html">Войти</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
     <main>
-        <h1>Форма обратной связи</h1>
-        <form method="POST" action="https://httpbin.org/post" enctype="multipart/form-data">
+            <h1>Форма обратной связи</h1>
+            <form method="POST" action="https://httpbin.org/post" enctype="multipart/form-data" id="form">
 
-            <input type="hidden" name="user_id" value="7">
+                <div class="form-group">
+                    <label for="#fio">
+                        <p>ФИО</p>
+                    </label>
+                    <input type="text" id="fio" name="fio" placeholder="Иванов Иван Иванович">
+                </div>
 
-            <div class="form-group">
-                <label for="#fio">ФИО</label>
-                <input type="text" id="fio" name="fio">
-            </div>
-            <div class="form-group">
-                <label for="#email">Email</label>
-                <input type="email" name="email" id="email" placeholder="exmaple@mail.com" required>
-            </div>
+                <div class="form-group">
+                    <label for="#email">
+                        <p>Email</p>
+                    </label>
+                    <input type="email" name="email" id="email" placeholder="exmaple@mail.com" required>
+                </div>
 
-            <div class="form-group">
-                <p>Как вы о нас узнали?</p>
-                <label for="#advertising">Реклама</label>
-                <input type="radio" name="source" id="advertising" value="advertising">
+                <div class="form-group">
+                    <p>Как вы о нас узнали?</p>
+                    <input type="radio" name="source" id="advertising" value="advertising">
+                    <label for="#advertising">Реклама</label>
 
-                <label for="#friends">Друзья</label>
-                <input type="radio" name="source" id="friends" value="friends">
-            </div>
+                    <input type="radio" name="source" id="friends" value="friends">
+                    <label for="#friends">Друзья</label>
 
-            <div class="form-group">
-                <label for="#msg">Текст сообщения</label>
-                <textarea name="msg" id="msg" cols="30" rows="10" placeholder="bla bla bla"></textarea>
-            </div>
+                </div>
 
-            <div class="form-group">
-                <select name="category" id="category" multiple>
-                    <option value="proposal">Предложение</option>
-                    <option value="feedback" selected>Пожелание</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="#category" id="category-label"><p>Тип обращения</p></label>
+                    
+                    <select name="category" id="category">
+                        <option value="proposal">Предложение</option>
+                        <option value="feedback" selected>Жалоба</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <input type="checkbox" name="agreement" id="agreement" value="yes" required>
-                <label for="#checkbox">Согласен на обработку данных</label>
-            </div>
-            <div class="form-group">
+                <div class="form-group">
+                    <label for="#msg">
+                        <p>Текст сообщения</p>
+                    </label>
+                    <textarea name="msg" id="msg" cols="30" rows="10" placeholder="Напишите свое сообщение здесь..."></textarea>
+                </div>
 
-                <input type="file" name="attachment" id="attachment">
-            </div>
-            <input type="submit" value="Отправить">
-        </form>
+               
+
+                <div class="form-group">
+                    <input type="checkbox" name="agreement" id="agreement" value="yes" required>
+                    <label for="#checkbox">Согласен на обработку данных</label>
+                </div>
+                <div class="form-group">
+                    <label for="#attachment"><p>Вложение</p></label>
+                    <input type="file" name="attachment" id="attachment">
+                </div>
+                
+                <input type="submit" value="Отправить" id="send-btn">
+            </form>
     </main>
+
+    <footer id="page-footer">
+        <p>&copy;2021 Рябов К. Д.</p>
+        <p><a href="mailto:k.d.riabov@stud.mospolytech.ru">k.d.riabov@stud.mospolytech.ru</a></p>
+    </footer>
 </body>
 
 </html>
