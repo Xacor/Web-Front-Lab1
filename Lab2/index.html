@@ -24,62 +24,67 @@
         </nav>
     </header>
     <main>
-            <h1>Форма обратной связи</h1>
-            <form method="POST" action="https://httpbin.org/post" enctype="multipart/form-data" id="form">
+        <h1>Форма обратной связи</h1>
+        <form method="POST" action="https://httpbin.org/post" enctype="multipart/form-data" id="form">
 
-                <div class="form-group">
-                    <label for="#fio">
-                        <p>ФИО</p>
-                    </label>
-                    <input type="text" id="fio" name="fio" placeholder="Иванов Иван Иванович">
-                </div>
+            <div class="form-group">
+                <label for="#fio">
+                    <p>ФИО</p>
+                </label>
+                <input type="text" id="fio" name="fio" placeholder="Иванов Иван Иванович">
+            </div>
 
-                <div class="form-group">
-                    <label for="#email">
-                        <p>Email</p>
-                    </label>
-                    <input type="email" name="email" id="email" placeholder="exmaple@mail.com" required>
-                </div>
+            <div class="form-group">
+                <label for="#email">
+                    <p>Email</p>
+                </label>
+                <input type="email" name="email" id="email" placeholder="exmaple@mail.com" required>
+            </div>
 
-                <div class="form-group">
-                    <p>Как вы о нас узнали?</p>
-                    <input type="radio" name="source" id="advertising" value="advertising">
-                    <label for="#advertising">Реклама</label>
+            <div class="form-group">
+                <p>Как вы о нас узнали?</p>
+                <input type="radio" name="source" id="advertising" value="advertising">
+                <label for="#advertising">Реклама</label>
 
-                    <input type="radio" name="source" id="friends" value="friends">
-                    <label for="#friends">Друзья</label>
+                <input type="radio" name="source" id="friends" value="friends">
+                <label for="#friends">Друзья</label>
 
-                </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="#category" id="category-label"><p>Тип обращения</p></label>
-                    
-                    <select name="category" id="category">
-                        <option value="proposal">Предложение</option>
-                        <option value="feedback" selected>Жалоба</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="#category" id="category-label">
+                    <p>Тип обращения</p>
+                </label>
 
-                <div class="form-group">
-                    <label for="#msg">
-                        <p>Текст сообщения</p>
-                    </label>
-                    <textarea name="msg" id="msg" cols="30" rows="10" placeholder="Напишите свое сообщение здесь..."></textarea>
-                </div>
+                <select name="category" id="category">
+                    <option value="proposal">Предложение</option>
+                    <option value="feedback" selected>Жалоба</option>
+                </select>
+            </div>
 
-               
+            <div class="form-group">
+                <label for="#msg">
+                    <p>Текст сообщения</p>
+                </label>
+                <textarea name="msg" id="msg" cols="30" rows="10"
+                    placeholder="Напишите свое сообщение здесь..."></textarea>
+            </div>
 
-                <div class="form-group">
-                    <input type="checkbox" name="agreement" id="agreement" value="yes" required>
-                    <label for="#checkbox">Согласен на обработку данных</label>
-                </div>
-                <div class="form-group">
-                    <label for="#attachment"><p>Вложение</p></label>
-                    <input type="file" name="attachment" id="attachment">
-                </div>
-                
-                <input type="submit" value="Отправить" id="send-btn">
-            </form>
+
+
+            <div class="form-group">
+                <input type="checkbox" name="agreement" id="agreement" value="yes" required>
+                <label for="#checkbox">Согласен на обработку данных</label>
+            </div>
+            <div class="form-group">
+                <label for="#attachment">
+                    <p>Вложение</p>
+                </label>
+                <input type="file" name="attachment" id="attachment">
+            </div>
+
+            <input type="submit" value="Отправить" id="send-btn">
+        </form>
     </main>
 
     <footer id="page-footer">
