@@ -1,0 +1,70 @@
+body {
+    margin: auto;
+    min-height: 100vh;
+    background-color: #181c24;
+    font-family: 'Noto Serif', serif;
+}
+
+.header .container {
+    height: 60px;
+    background-color: #222833;
+    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.24);
+}
+
+.main-nav {
+    text-align: center;
+}
+
+.main-nav a {
+	display: inline-block;
+    font-size: 26px;
+    font-weight: bold;
+    padding: .4em 1.5em;
+    color: #e1e1e3;
+    text-decoration: none;
+}
+
+main {  
+    color: #e1e1e3;
+    min-height: 100vh;
+} 
+
+.sect-title {
+    margin-top: 40px;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+    gap: 40px;
+    
+}
+
+.cards_item {
+    /* There will be 4 cards per row */
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    height: 370px;
+    
+
+}
+.cards_item a {
+    text-decoration: inherit;
+    color: inherit;
+}
+.cards_item img {
+    width: 100%;
+    height: 318px;
+    object-fit: contain;
+}
+
+.details {
+    text-align: center;
+    font-weight: bold;
+}
