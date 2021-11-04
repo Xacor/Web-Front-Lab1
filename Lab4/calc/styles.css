@@ -1,0 +1,75 @@
+html, body, main{
+    height: 100%;
+    background-color: #171717
+}
+
+main{
+    display: flex;
+}
+
+.calc-container{
+    display: flex;
+    flex-direction: column;
+    
+    margin: auto;
+    height: 500px;
+    width: 500px;
+    background-color: #171717
+}
+
+.screen{
+    text-align: end;
+    height: 100px;
+    border: 1px #63cbc0 solid; 
+    color: #c0c0c0;
+}
+
+.buttons{
+    display: flex;
+    align-items: stretch;
+    background-color: #232323;
+}
+
+.digits{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 5px;
+}
+
+.other{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 5px;
+    flex-direction: row-reverse;
+}
+
+
+.buttons button{
+    height: 90px;
+    width: 90px;
+    color: #c0c0c0;
+    /* color: #63cbc0; */
+    background-color: #232323;
+    border: #232323;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.other button {
+    color: #63cbc0;
+}
+
+.buttons button:hover{
+    background-color: gray;
+}
+
+.calc-container span, button{
+    font-size: 50px;
+
+}
+
+.digits button:last-child{
+    visibility: hidden;
+}
