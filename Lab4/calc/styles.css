@@ -42,7 +42,6 @@ main{
     flex-wrap: wrap;
     align-content: flex-start;
     gap: 5px;
-    flex-direction: row-reverse;
 }
 
 
