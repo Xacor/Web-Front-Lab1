@@ -48,7 +48,6 @@ main{
     height: 90px;
     width: 90px;
     color: #c0c0c0;
-    /* color: #63cbc0; */
     background-color: #232323;
     border: #232323;
     transition-duration: 0.4s;
@@ -60,12 +59,11 @@ main{
 }
 
 .buttons button:hover{
-    background-color: gray;
+    background-color: rgb(100, 100, 100);
 }
 
 .calc-container span, button{
     font-size: 50px;
-
 }
 
 .digits button:last-child{
