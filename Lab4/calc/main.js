@@ -99,7 +99,7 @@ function compile(str) {
 
 function evaluate(str) {
     // your code here
-    let polish = tokenize(compile(str));
+    let polish = tokenize(str);
     let stack = [];
     //console.log(polish);
     for (const el of polish) {
@@ -158,7 +158,7 @@ function clickHandler(event) {
     }
 
     if (event.target.className == 'key-result') {
-        document.querySelector('.expression').innerHTML = evaluate(document.querySelector('.expression').innerHTML)
+        document.querySelector('.expression').innerHTML = evaluate(compile(document.querySelector('.expression').innerHTML))
     }
 }
 
