@@ -26,8 +26,8 @@ function updateTask(form) {
     let taskElement = document.getElementById(form.elements['task-id'].value);
     taskElement.querySelector('.task-name').innerHTML = form.elements['name'].value;
     taskElement.querySelector('.task-description').innerHTML = form.elements['description'].value;
-    
-    putTask(form, form.elements['task-id'].value);
+
+    putTask(new FormData(form), form.elements['task-id'].value);
 }
 
 function actionTaskBtnHandler(event) {
@@ -97,6 +97,7 @@ function deleteTaskBtnHandler(event) {
     let tasksCounterElement = taskElement.closest('.card').querySelector('.tasks-counter');
     tasksCounterElement.innerHTML = Number(tasksCounterElement.innerHTML) - 1;
 
+    deleteTask(form.elements['task-id'].value);
     taskElement.remove();
 }
 
@@ -112,6 +113,15 @@ function moveBtnHandler(event) {
 
     tasksCounterElement = targetListElement.closest('.card').querySelector('.tasks-counter');
     tasksCounterElement.innerHTML = Number(tasksCounterElement.innerHTML) + 1;
+
+    let status = listElement.id == 'to-do-list' ? 'done' : 'to-do'; 
+    let formData = new FormData(); 
+    formData.append('status', status);
+    for (var value of formData.values()) {
+        console.log(value);
+     }  
+    putTask(formData, taskElement.id);
+
 }
 
 let taskCounter = 0;
@@ -135,7 +145,7 @@ async function getTasks() {
     let url = new URL(apiUrl);
     url.searchParams.set('api_key', apiKey);
     let response = await fetch(url);
-    
+
     let json = await response.json();
     return json;
 }
@@ -144,7 +154,7 @@ async function getTaskById(id) {
     let url = new URL(apiUrl + `/${id}`);
     url.searchParams.set('api_key', apiKey);
     let response = await fetch(url);
-    
+
     let json = await response.json();
     return json;
 }
@@ -154,10 +164,10 @@ async function postTask(form) {
     url.searchParams.set('api_key', apiKey);
 
     let formData = new FormData(form);
-    
+
     formData.set('status', formData.get('column'));
     formData.set('desc', formData.get('description'))
-    
+
     formData.delete('task-id');
     formData.delete('action');
     formData.delete('description');
@@ -176,16 +186,21 @@ async function putTask(form, id) {
     let url = new URL(apiUrl + `/${id}`);
     url.searchParams.set('api_key', apiKey);
 
-    let formData = new FormData(form);
+    let formData = form;
     
-    formData.set('status', formData.get('column'));
-    formData.set('desc', formData.get('description'))
     
-    formData.delete('task-id');
-    formData.delete('action');
-    formData.delete('description');
-    formData.delete('column');
+    //SUPER MEGA DOOPER COSTIL
+    if (formData.get('column')) {
+        formData.set('status', formData.get('column'));
+        formData.set('desc', formData.get('description'));
 
+        formData.delete('action');
+        formData.delete('description');
+        formData.delete('column');
+    }
+    for (var value of formData.values()) {
+        console.log(value);
+     }
     let response = await fetch(url, {
         method: 'PUT',
         body: formData
@@ -208,10 +223,29 @@ async function deleteTask(id) {
 }
 
 function drawTasks(tasks) {
-    
+    for (let i = 0; i < tasks.length; i++) {
+        let listElement = document.getElementById(`${tasks[i].status}-list`);
+        let newTaskElement = document.getElementById('task-template').cloneNode(true);
+        newTaskElement.id = tasks[i].id;
+        newTaskElement.querySelector('.task-name').innerHTML = tasks[i].name;
+        newTaskElement.querySelector('.task-description').innerHTML = tasks[i].desc;
+        newTaskElement.classList.remove('d-none');
+        for (let btn of newTaskElement.querySelectorAll('.move-btn')) {
+            btn.onclick = moveBtnHandler;
+        }
+        let tasksCounterElement = listElement.closest('.card').querySelector('.tasks-counter');
+        tasksCounterElement.innerHTML = Number(tasksCounterElement.innerHTML) + 1;
+        listElement.append(newTaskElement);
+
+    }
+
 }
 
 window.onload = function () {
+    getTasks().then(
+        result => drawTasks(result.tasks),
+        error => console.log(error) //errorHadler
+    );
     document.querySelector('.action-task-btn').onclick = actionTaskBtnHandler;
     document.getElementById('task-modal').addEventListener('show.bs.modal', prepareModalContent);
     document.getElementById('remove-task-modal').addEventListener('show.bs.modal', function (event) {
@@ -224,8 +258,5 @@ window.onload = function () {
     for (let btn of document.querySelectorAll('.move-btn')) {
         btn.onclick = moveBtnHandler;
     }
-    getTasks().then(
-        result => drawTasks(result),
-        error => console.log(error) //getTasksErrorHadler
-    );
+
 }
