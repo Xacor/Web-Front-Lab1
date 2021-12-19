@@ -4,13 +4,18 @@ function showAlert(msg, category = 'success') {
     let alerts = document.querySelector('.alerts');
     let newAlertElement = document.querySelector('.alert-template').cloneNode(true);
     newAlertElement.querySelector('.msg').innerHTML = msg;
+    if (category == 'success') {
+        newAlertElement.classList.add('alert-success')
+    } else {
+        newAlertElement.classList.add('alert-danger')
+    }
     newAlertElement.classList.remove('d-none');
     alerts.append(newAlertElement);
 }
 
 function createTaskElement(form) {
     let newTaskElement = document.getElementById('task-template').cloneNode(true);
-    newTaskElement.id = taskCounter++;
+    newTaskElement.id = form.elements['task-id'].value;
     newTaskElement.querySelector('.task-name').innerHTML = form.elements['name'].value;
     newTaskElement.querySelector('.task-description').innerHTML = form.elements['description'].value;
     newTaskElement.classList.remove('d-none');
@@ -18,7 +23,6 @@ function createTaskElement(form) {
         btn.onclick = moveBtnHandler;
     }
 
-    postTask(form);
     return newTaskElement;
 }
 
@@ -27,7 +31,6 @@ function updateTask(form) {
     taskElement.querySelector('.task-name').innerHTML = form.elements['name'].value;
     taskElement.querySelector('.task-description').innerHTML = form.elements['description'].value;
 
-    putTask(new FormData(form), form.elements['task-id'].value);
 }
 
 function actionTaskBtnHandler(event) {
@@ -37,22 +40,25 @@ function actionTaskBtnHandler(event) {
 
 
     if (action == 'create') {
-        listElement = document.getElementById(`${form.elements['column'].value}-list`);
-        listElement.append(createTaskElement(form));
+        postTask(form)
+            .then(function (json) {
+                listElement = document.getElementById(`${form.elements['column'].value}-list`);
+                form.elements['task-id'].value = json.id;
+                listElement.append(createTaskElement(form));
 
-        tasksCounterElement = listElement.closest('.card').querySelector('.tasks-counter');
-        tasksCounterElement.innerHTML = Number(tasksCounterElement.innerHTML) + 1;
+                tasksCounterElement = listElement.closest('.card').querySelector('.tasks-counter');
+                tasksCounterElement.innerHTML = Number(tasksCounterElement.innerHTML) + 1;
+            })
+            .then(result => showAlert(`Задача ${form.elements['name'].value} была успешно создана!`))
+            .catch(error => showAlert(error, 'danger'));
 
-        alertMsg = `Задача ${form.elements['name'].value} была успешно создана!`;
     } else if (action == 'edit') {
-        updateTask(form);
-
-        alertMsg = `Задача ${form.elements['name'].value} была успешно обновлена!`;
+        putTask(new FormData(form), form.elements['task-id'].value)
+            .then(result => updateTask(form))
+            .then(result => showAlert(`Задача ${form.elements['name'].value} была успешно обновлена!`))
+            .catch(error => showAlert(error, 'danger'));
     }
 
-    if (alertMsg) {
-        showAlert(alertMsg);
-    }
 }
 
 function setFormValues(form, taskId) {
@@ -92,35 +98,39 @@ function prepareModalContent(event) {
 
 function deleteTaskBtnHandler(event) {
     let form = event.target.closest('.modal').querySelector('form');
-    let taskElement = document.getElementById(form.elements['task-id'].value);
+    deleteTask(form.elements['task-id'].value)
+        .then(function () {
+            let taskElement = document.getElementById(form.elements['task-id'].value);
 
-    let tasksCounterElement = taskElement.closest('.card').querySelector('.tasks-counter');
-    tasksCounterElement.innerHTML = Number(tasksCounterElement.innerHTML) - 1;
+            let tasksCounterElement = taskElement.closest('.card').querySelector('.tasks-counter');
+            tasksCounterElement.innerHTML = Number(tasksCounterElement.innerHTML) - 1;
 
-    deleteTask(form.elements['task-id'].value);
-    taskElement.remove();
+            taskElement.remove();
+        })
+        .catch(error => showAlert(error, 'danger'))
 }
 
 function moveBtnHandler(event) {
+
+
     let taskElement = event.target.closest('.task');
     let listElement = taskElement.closest('ul');
     let targetListElement = document.getElementById(listElement.id == 'to-do-list' ? 'done-list' : 'to-do-list');
 
-    let tasksCounterElement = taskElement.closest('.card').querySelector('.tasks-counter');
-    tasksCounterElement.innerHTML = Number(tasksCounterElement.innerHTML) - 1;
-
-    targetListElement.append(taskElement);
-
-    tasksCounterElement = targetListElement.closest('.card').querySelector('.tasks-counter');
-    tasksCounterElement.innerHTML = Number(tasksCounterElement.innerHTML) + 1;
-
-    let status = listElement.id == 'to-do-list' ? 'done' : 'to-do'; 
-    let formData = new FormData(); 
+    let status = listElement.id == 'to-do-list' ? 'done' : 'to-do';
+    let formData = new FormData();
     formData.append('status', status);
-    for (var value of formData.values()) {
-        console.log(value);
-     }  
-    putTask(formData, taskElement.id);
+    putTask(formData, taskElement.id)
+        .then(function () {
+            let tasksCounterElement = taskElement.closest('.card').querySelector('.tasks-counter');
+            tasksCounterElement.innerHTML = Number(tasksCounterElement.innerHTML) - 1;
+
+            targetListElement.append(taskElement);
+
+            tasksCounterElement = targetListElement.closest('.card').querySelector('.tasks-counter');
+            tasksCounterElement.innerHTML = Number(tasksCounterElement.innerHTML) + 1;
+        })
+        .catch(error => showAlert(error, 'danger'));
 
 }
 
@@ -139,7 +149,7 @@ let actionBtnText = {
 };
 
 let apiKey = '50d2199a-42dc-447d-81ed-d68a443b697e';
-let apiUrl = 'http://tasks-api.std-900.ist.mospolytech.ru/api/tasks';
+let apiUrl = 'http://tasks-api.std-900.ist.mospolytech.ru//api/tasks';
 
 async function getTasks() {
     let url = new URL(apiUrl);
@@ -147,17 +157,25 @@ async function getTasks() {
     let response = await fetch(url);
 
     let json = await response.json();
-    return json;
+    if (!json.error) {
+        return Promise.resolve(json);
+    } else {
+        return Promise.reject(json.error);
+    }
 }
 
-async function getTaskById(id) {
-    let url = new URL(apiUrl + `/${id}`);
-    url.searchParams.set('api_key', apiKey);
-    let response = await fetch(url);
+// async function getTaskById(id) {
+//     let url = new URL(apiUrl + `/${id}`);
+//     url.searchParams.set('api_key', apiKey);
+//     let response = await fetch(url);
 
-    let json = await response.json();
-    return json;
-}
+//     let json = await response.json();
+//     if (!json.error) {
+//         return Promise.resolve(json);
+//     } else {
+//         return Promise.reject(json.error);
+//     }
+// }
 
 async function postTask(form) {
     let url = new URL(apiUrl);
@@ -179,7 +197,11 @@ async function postTask(form) {
     });
 
     let json = await response.json();
-    return json;
+    if (!json.error) {
+        return Promise.resolve(json);
+    } else {
+        return Promise.reject(json.error);
+    }
 }
 
 async function putTask(form, id) {
@@ -187,8 +209,8 @@ async function putTask(form, id) {
     url.searchParams.set('api_key', apiKey);
 
     let formData = form;
-    
-    
+
+
     //SUPER MEGA DOOPER COSTIL
     if (formData.get('column')) {
         formData.set('status', formData.get('column'));
@@ -198,16 +220,17 @@ async function putTask(form, id) {
         formData.delete('description');
         formData.delete('column');
     }
-    for (var value of formData.values()) {
-        console.log(value);
-     }
     let response = await fetch(url, {
         method: 'PUT',
         body: formData
     });
 
     let json = await response.json();
-    return json;
+    if (!json.error) {
+        return Promise.resolve(json);
+    } else {
+        return Promise.reject(json.error);
+    }
 }
 
 async function deleteTask(id) {
@@ -219,7 +242,12 @@ async function deleteTask(id) {
     });
 
     let json = await response.json();
-    return json;
+
+    if (!json.error) {
+        return Promise.resolve(json);
+    } else {
+        return Promise.reject(json.error)
+    }
 }
 
 function drawTasks(tasks) {
@@ -244,7 +272,7 @@ function drawTasks(tasks) {
 window.onload = function () {
     getTasks().then(
         result => drawTasks(result.tasks),
-        error => console.log(error) //errorHadler
+        error => showAlert(error, 'danger')
     );
     document.querySelector('.action-task-btn').onclick = actionTaskBtnHandler;
     document.getElementById('task-modal').addEventListener('show.bs.modal', prepareModalContent);
