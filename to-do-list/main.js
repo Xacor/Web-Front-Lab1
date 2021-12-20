@@ -210,16 +210,25 @@ async function putTask(form, id) {
 
     let formData = form;
 
-
+    
+    
     //SUPER MEGA DOOPER COSTIL
     if (formData.get('column')) {
-        formData.set('status', formData.get('column'));
         formData.set('desc', formData.get('description'));
 
         formData.delete('action');
         formData.delete('description');
         formData.delete('column');
     }
+
+    //Удаление неизмененных параметров
+    let taskElement = document.getElementById(id);
+    let oldName = taskElement.querySelector('.task-name').innerHTML;
+    let oldDescription = taskElement.querySelector('.task-description').innerHTML;
+
+    if (oldName == formData.get('name')) formData.delete('name');
+    if (oldDescription == formData.get('desc')) formData.delete('desc');
+
     let response = await fetch(url, {
         method: 'PUT',
         body: formData
